@@ -17,7 +17,8 @@ class ShopCart extends Controller
     public function index()
     {
       //
-      $products = DB::select('select * from products');
+      // $products = DB::select('select * from products');
+      $products = DB::table('products')->get();
       return view('stud_view',['products'=>$products]);
     }
 
