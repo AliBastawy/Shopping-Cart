@@ -19,7 +19,7 @@ class ShopCart extends Controller
       //
       // $products = DB::select('select * from products');
       $products = DB::table('products')->get();
-      return view('stud_view',['products'=>$products]);
+      return view('prod_view',['products'=>$products]);
     }
 
     /**

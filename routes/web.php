@@ -20,3 +20,4 @@ Route::get('insert', function() {
   return view('products-create');
 });
 Route::post('create','App\Http\Controllers\ShopCart@store');
+Route::get('view-records','App\Http\Controllers\ShopCart@index');
