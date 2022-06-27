@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ShopCart extends Controller
@@ -16,10 +15,18 @@ class ShopCart extends Controller
      */
     public function index()
     {
-      //
+      // For GET API
       // $products = DB::select('select * from products');
       $products = DB::table('products')->get();
-      return view('prod_view',['products'=>$products]);
+      return ['products'=>$products];
+    }
+
+    // View Records for Laravel Application
+    public function viewRecords()
+    {
+      //
+      $products = DB::table('products')->get();
+      return view('products_view',['products'=>$products]);
     }
 
     /**
@@ -44,9 +51,19 @@ class ShopCart extends Controller
       $name = $request->input('name');
       $price = $request->input('price');
       $body = $request->input('body');
-      $data=array('name'=>$name,"price"=>$price,"body"=>$body);
+      // Add New Created Product to Stripe Products
+      $stripe = new \Stripe\StripeClient("sk_test_51LEwj8KwHhxzhn4RYAYqHKfTweb3x3j4CakFdUjuZRfbOD4babCyWdyIuLjUPqTrzcMB2k55veW5ONzoYkzuaPT900VD53FjTx");
+      $check = $stripe->products->create([
+        'name' => $name,
+        'description' => $body,
+        'default_price_data' => [
+          'currency' => 'USD',
+          'unit_amount' => $price * 100
+        ]
+      ]);
+      $data=array('name'=>$name,"price"=>$price,"body"=>$body, "priceID" => $check->default_price);
       DB::table('products')->insert($data);
-      return view('products-create');
+      return to_route('view-records');
     }
 
     /**
@@ -57,7 +74,8 @@ class ShopCart extends Controller
      */
     public function show($id)
     {
-        //
+      $product = DB::select('select * from products where id = ?', [$id]);
+      return view('products-create', ['product'=>$product]);
     }
 
     /**
@@ -66,9 +84,14 @@ class ShopCart extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+      //
+      $name = $request->input('name');
+      $price = $request->input('price');
+      $body = $request->input('body');
+      DB::update('update products set name = ?, price = ?, body = ? where id = ?', [$name, $price, $body, $id]);
+      return to_route('view-records');
     }
 
     /**
@@ -91,6 +114,7 @@ class ShopCart extends Controller
      */
     public function destroy($id)
     {
-        //
+      DB::delete('delete from products where id = ?',[$id]);
+      return to_route('view-records');
     }
 }

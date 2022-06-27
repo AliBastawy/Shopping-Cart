@@ -11,25 +11,6 @@
 </head>
 <body>
 
-@if ($_SERVER['REQUEST_URI'] === '/insert')
-<div class="container">
-  <h2 class="text-center">Products Management | Add</h2>
-  <br>
-  <form action = "/create" method = "post" class="form-group" style="width:70%; margin-left:15%;" action="/action_page.php">
-
-  <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>"><input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
-
-    <label class="form-group">Name:</label>
-    <input type="text" class="form-control" placeholder="Name" name="name">
-    <label>Price:</label>
-    <input type="text" class="form-control" placeholder="Price" name="price">
-  <label>Body:</label>
-    <input type="text" class="form-control" placeholder="Enter Body" name="body"><br>
-    <button type="submit"  value = "Add student" class="btn btn-primary">Submit</button>
-  </form>
-</div>
-
-@else
 <div class="container">
   <h2 class="text-center">Products Management | Edit</h2>
   <br>
@@ -47,8 +28,6 @@
     <button type="submit"  value = "Add student" class="btn btn-primary">Submit</button>
   </form>
 </div>
-
-@endif
 
 </body>
 </html>

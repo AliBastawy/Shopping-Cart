@@ -18,6 +18,18 @@ Route::get('/', function () {
 
 Route::get('insert', function() {
   return view('products-create');
-});
+})->name('insert');
+// Edit Page
+Route::get('edit/{id}', 'App\Http\Controllers\ShopCart@show');
+
 Route::post('create','App\Http\Controllers\ShopCart@store');
-Route::get('view-records','App\Http\Controllers\ShopCart@index');
+Route::get('view-records','App\Http\Controllers\ShopCart@viewRecords')->name('view-records');
+Route::get('delete/{id}','App\Http\Controllers\ShopCart@destroy');
+
+// Edit API
+Route::patch('products/edit/{id}','App\Http\Controllers\ShopCart@edit')->name('products.edit');
+
+// For Stripe Checkout Element
+Route::get('/checkout', function () {
+  return view('checkout');
+});

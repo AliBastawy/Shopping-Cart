@@ -12,7 +12,7 @@
 <body>
 <div class="container">
   <h2 class="text-center">View Products Records</h2>
-           
+
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
@@ -20,6 +20,8 @@
         <th>Name</th>
         <th>Price</th>
         <th>Body</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +31,12 @@
       <td>{{ $product->name }}</td>
       <td>{{ $product->price }}</td>
       <td>{{ $product->body }}</td>
+      <td>
+        <a href="edit/{{$product->id}}">Edit</a>
+      </td>
+      <td>
+        <a href="delete/{{$product->id}}">Delete</a>
+      </td>
       </tr>
       @endforeach
     </tbody>
