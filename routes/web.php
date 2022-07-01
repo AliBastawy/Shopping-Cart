@@ -29,7 +29,8 @@ Route::get('delete/{id}','App\Http\Controllers\ShopCart@destroy');
 // Edit API
 Route::patch('products/edit/{id}','App\Http\Controllers\ShopCart@edit')->name('products.edit');
 
-// For Stripe Checkout Element
-Route::get('/checkout', function () {
-  return view('checkout');
-});
+Route::get('sendtxtmail','App\Http\Controllers\MailController@txt_mail');
+Route::get('sendhtmlmail','App\Http\Controllers\MailController@html_mail');
+Route::get('sendattachedemail','App\Http\Controllers\MailController@attached_email');
+
+// Route::post('/contact', 'App\Http\Controllers\successmail@send');

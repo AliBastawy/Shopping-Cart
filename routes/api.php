@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopCart;
+use App\Http\Controllers\secret;
+use App\Http\Controllers\paymentForm;
+use App\Http\Controllers\successmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::apiResource('products', 'App\Http\Controllers\ShopCart@index');
 Route::apiResource('products', ShopCart::class);
+Route::apiResource('checkout2', secret::class);
+Route::apiResource('checkout3', paymentForm::class);
+Route::apiResource('checkout4', successmail::class);
