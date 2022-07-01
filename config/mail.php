@@ -36,8 +36,8 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST'),
-            'port' => env('MAIL_PORT'),
+            'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
+            'port' => env('MAIL_PORT', '2525'),
             // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             // 'port' => env('MAIL_PORT', 587),
             // 'port' => env('MAIL_PORT', 2525),
