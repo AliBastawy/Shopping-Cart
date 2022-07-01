@@ -61,7 +61,7 @@ class ShopCart extends Controller
           'unit_amount' => $price * 100
         ]
       ]);
-      $data=array('name'=>$name,"price"=>$price,"body"=>$body, "priceID" => $check->default_price);
+      $data = array('name' => $name, "price" => $price, "body" => $body, "priceid" => $check->default_price);
       DB::table('products')->insert($data);
       return to_route('view-records');
     }
