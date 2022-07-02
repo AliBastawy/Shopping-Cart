@@ -8,47 +8,6 @@ use Illuminate\Http\Request;
 
 class secret extends Controller
 {
-    //
-    // public function index()
-    // {
-    //   \Stripe\Stripe::setApiKey('sk_test_51LEwj8KwHhxzhn4RYAYqHKfTweb3x3j4CakFdUjuZRfbOD4babCyWdyIuLjUPqTrzcMB2k55veW5ONzoYkzuaPT900VD53FjTx');
-      
-    //   function calculateOrderAmount(array $items): int {
-    //     // Replace this constant with a calculation of the order's amount
-    //     // Calculate the order total on the server to prevent
-    //     // people from directly manipulating the amount on the client
-    //     return 1400;
-    //   }
-    
-    //   header('Content-Type: application/json');
-      
-    //   try {
-    //       // retrieve JSON from POST body
-    //       $jsonStr = file_get_contents('php://input');
-    //       $jsonObj = json_decode($jsonStr);
-      
-    //       // Create a PaymentIntent with amount and currency
-    //       $paymentIntent = \Stripe\PaymentIntent::create([
-    //           'amount' => calculateOrderAmount($jsonObj->items),
-    //           'currency' => $jsonObj->currency,
-    //           'automatic_payment_methods' => [
-    //               'enabled' => true,
-    //           ],
-    //       ]);
-      
-    //       $output = [
-    //           'clientSecret' => $paymentIntent->client_secret,
-    //       ];
-      
-    //       echo json_encode($output);
-    //   } catch (Error $e) {
-    //       http_response_code(500);
-    //       echo json_encode(['error' => $e->getMessage()]);
-    //   }
-
-    //   // return ['clientSecret' => $paymentIntent->client_secret];
-    // }
-
     public function store(Request $request)
     {
       //
@@ -66,15 +25,6 @@ class secret extends Controller
       try {
         // return ['json_obj' => $json_obj];
         if (isset($json_obj->payment_method_id)) {
-          
-          // $lineItems = [];
-
-          // foreach($json_obj->lineItems as $item) {
-          //   array_push($lineItems, [
-          //     "price" => $item->price,
-          //     "quantity" => $item->quantity,
-          //   ]);
-          // }
 
           # Create the PaymentIntent
           $intent = $stripe->paymentIntents->create([
@@ -92,8 +42,10 @@ class secret extends Controller
           );
           $intent->confirm();
         }
+        // Send Mail with payment info to Customer Email
         Mail::to($json_obj->email)->send(new SMail());
-        // $this->generateResponse($intent);
+        $this->generateResponse($intent);
+
       } catch (\Stripe\Exception\ApiErrorException $e) {
         # Display error on client
         echo json_encode([
